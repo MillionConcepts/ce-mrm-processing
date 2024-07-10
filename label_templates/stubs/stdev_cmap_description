@@ -1,0 +1,3 @@
+It was created by clipping that array's values at their 99th percentile and
+transforming them with a perceptually-uniform linear colormap (named
+'vaportrail').

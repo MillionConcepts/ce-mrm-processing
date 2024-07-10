@@ -1,0 +1,62 @@
+{delete:1d}
+<Array_{dimensionality}D_Image>
+{stop:1d}
+{delete:2d}
+{delete:3d}
+<Array_1D>
+{stop:2d}
+{stop:3d}
+ <local_identifier>{hdu_name}</local_identifier>
+ <offset unit="byte">{data_offset}</offset>
+ <axes>{dimensionality}</axes>
+ <axis_index_order>Last Index Fastest</axis_index_order>
+{description}
+ <Element_Array>
+  <data_type>{dtype}</data_type>
+  {delete:no_unit}
+  <unit>{unit}</unit>
+  {stop:no_unit}
+  {delete:no_scale}
+  <scaling_factor>{scale}</scaling_factor>
+  {stop:no_scale}
+  {delete:no_offset}
+  <value_offset>{offset}</value_offset>
+  {stop:no_offset}
+ </Element_Array>
+ {delete:1d}
+ <Axis_Array>
+  <axis_name>Line</axis_name>
+  <elements>{lines}</elements>
+  <sequence_number>1</sequence_number>
+ </Axis_Array>
+ {stop:1d}
+ <Axis_Array>
+  <axis_name>Sample</axis_name>
+  <elements>{samples}</elements>
+  {delete:1d}
+  <sequence_number>2</sequence_number>
+  {stop:1d}
+  {delete:2d}
+  <sequence_number>1</sequence_number>
+  {stop:2d}
+ </Axis_Array>
+ {delete:1d}
+ {delete:2d}
+ <Axis_Array>
+  <axis_name>Band</axis_name>
+  <elements>{bands}</elements>
+  <sequence_number>3</sequence_number>
+ </Axis_Array>
+ {stop:1d}
+ {stop:2d}
+ {delete:no_missing_constant}
+ <Special_Constants>
+  <missing_constant>{missing_constant}</missing_constant>
+ </Special_Constants>
+ {stop:no_missing_constant}
+{delete:1d}
+</Array_{dimensionality}D_Image>
+{stop:1d}
+{delete:2d}
+{delete:3d}
+</Array_1D>

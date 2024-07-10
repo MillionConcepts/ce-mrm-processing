@@ -1,0 +1,11 @@
+It was created by clipping the array at its 2nd and 98th percentiles, subtracting
+the array mean, and transforming the resulting values with a perceptually-uniform
+diverging (two-sided w/distinct slopes) colormap (named 'neon_r') with
+center (black point) at 0 (corresponding to the mean of the percentile-clipped array).
+This is intended to highlight areas of difference between the modeled and
+observational data. The mean shift and variable scale are used because (1) magnitude
+of differences can vary greatly even within a single frequency band over the course
+of the diurnal cycle and (2) the model will almost always be "hotter" than the
+observational data because it does not account for the dielectric loss tangent;
+subtracting the mean is an attempt to adjust for average loss tangent in order
+to better show the effects of its variability across the surface.

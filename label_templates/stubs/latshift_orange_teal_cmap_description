@@ -1,0 +1,5 @@
+It was created by clipping that array's values at +/- 15 and transforming them
+with a perceptually-uniform diverging (two-sided) colormap (named 'orange_teal')
+with center (black point) at 0. This is intended to highlight areas of difference
+between measured temperature values and the overall latitudinal trend within a
+particular time / frequency bin.

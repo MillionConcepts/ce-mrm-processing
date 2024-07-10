@@ -1,0 +1,6 @@
+This product contains modeled time-binned lunar brightness temperatures at
+{channel_freq} GHz. It was created by interpolating observational data from Kaguya
+SELENE and LRO Diviner, LOLA, and LROC within the parameter space of a physical
+heatflow model. These values are presented in equirectangular projection at {ppd}
+pixels per degree and organized into separate HDUs of a FITS file, one HDU per
+{ltst_binsize}-hour local time bin.

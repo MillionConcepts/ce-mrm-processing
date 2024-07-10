@@ -1,0 +1,140 @@
+   <Record_Character>
+    <fields>11</fields>
+    <groups>0</groups>
+    <record_length unit="byte">121</record_length>
+    <Field_Character>
+     <name>Time</name>
+     <field_number>1</field_number>
+     <field_location unit="byte">1</field_location>
+     <data_type>ASCII_Date_Time_YMD_UTC</data_type>
+     <field_length unit="byte">24</field_length>
+     <description>Time of sample acquisition.</description>
+    </Field_Character>
+    <Field_Character>
+     <name>Channel 1 Antenna Temperature</name>
+     <field_number>2</field_number>
+     <field_location unit="byte">26</field_location>
+     <data_type>ASCII_Real</data_type>
+     <field_length unit="byte">8</field_length>
+     <unit>K</unit>
+     <description>
+      Calibrated antenna temperature at MRM channel 1 (3 GHz).
+     </description>
+    </Field_Character>
+    <Field_Character>
+     <name>Channel 2 Antenna Temperature</name>
+     <field_number>3</field_number>
+     <field_location unit="byte">35</field_location>
+     <data_type>ASCII_Real</data_type>
+     <field_length unit="byte">8</field_length>
+     <unit>K</unit>
+     <description>
+      Calibrated antenna temperature at MRM channel 2 (7.8 GHz).
+     </description>
+    </Field_Character>
+    <Field_Character>
+     <name>Channel 3 Antenna Temperature</name>
+     <field_number>4</field_number>
+     <field_location unit="byte">44</field_location>
+     <data_type>ASCII_Real</data_type>
+     <field_length unit="byte">8</field_length>
+     <unit>K</unit>
+     <description>
+      Calibrated antenna temperature at MRM channel 3 (19.35 GHz).
+     </description>
+    </Field_Character>
+    <Field_Character>
+     <name>Channel 4 Antenna Temperature</name>
+     <field_number>5</field_number>
+     <field_location unit="byte">53</field_location>
+     <data_type>ASCII_Real</data_type>
+     <field_length unit="byte">8</field_length>
+     <unit>K</unit>
+     <description>
+      Calibrated antenna temperature at MRM channel 4 (37 GHz).
+     </description>
+    </Field_Character>
+    <Field_Character>
+     <name>Solar Incidence Angle</name>
+     <field_number>6</field_number>
+     <field_location unit="byte">62</field_location>
+     <data_type>ASCII_Real</data_type>
+     <field_length unit="byte">9</field_length>
+     <unit>deg</unit>
+     <description>
+      Solar incidence angle at nominal boresight intercept point relative to
+      Moon ellipsoid normal. This is a "signed" incidence angle; values > 90
+      degrees imply that the point is not illuminated.
+     </description>
+    </Field_Character>
+    <Field_Character>
+     <name>Solar Azimuth Angle</name>
+     <field_number>7</field_number>
+     <field_location unit="byte">72</field_location>
+     <data_type>ASCII_Real</data_type>
+     <field_length unit="byte">9</field_length>
+     <unit>deg</unit>
+     <description>
+      Solar azimuth angle at nominal boresight intercept point relative to Moon
+      ellipsoid normal.
+     </description>
+    </Field_Character>
+    <Field_Character>
+     <name>Longitude</name>
+     <field_number>8</field_number>
+     <field_location unit="byte">82</field_location>
+     <data_type>ASCII_Real</data_type>
+     <field_length unit="byte">9</field_length>
+     <unit>deg</unit>
+     <description>
+      Selenodetic longitude of nominal boresight intercept point (equivalently,
+      sub-orbiter point). The coordinate system is not specified, but appears
+      to be MOON_ME.
+     </description>
+     <Special_Constants>
+      <invalid_constant>9999.9999</invalid_constant>
+     </Special_Constants>
+    </Field_Character>
+    <Field_Character>
+     <name>Latitude</name>
+     <field_number>9</field_number>
+     <field_location unit="byte">92</field_location>
+     <data_type>ASCII_Real</data_type>
+     <field_length unit="byte">9</field_length>
+     <unit>deg</unit>
+     <description>
+      Selenodetic latitude of nominal boresight intercept point (equivalently,
+      sub-orbiter point). The coordinate system is not specified, but appears
+      to be MOON_ME.
+     </description>
+     <Special_Constants>
+      <invalid_constant>9999.9999</invalid_constant>
+     </Special_Constants>
+    </Field_Character>
+    <Field_Character>
+     <name>Satellite Altitude</name>
+     <field_number>10</field_number>
+     <field_location unit="byte">102</field_location>
+     <data_type>ASCII_Real</data_type>
+     <field_length unit="byte">10</field_length>
+     <unit>km</unit>
+     <description>
+      Distance from orbiter to nominal boresight intercept point (equivalently,
+      orbital height).
+     </description>
+     <Special_Constants>
+       <invalid_constant>999.999999</invalid_constant>
+     </Special_Constants>
+    </Field_Character>
+    <Field_Character>
+     <name>Quality State</name>
+     <field_number>11</field_number>
+     <field_location unit="byte">113</field_location>
+     <data_type>ASCII_String</data_type>
+     <field_length unit="byte">8</field_length>
+     <description>
+      Data quality flags. No documentation is available, but any value other
+      than "0X000000" in this field appears to indicate off-nominal data.
+     </description>
+    </Field_Character>
+   </Record_Character>

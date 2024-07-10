@@ -1,0 +1,5 @@
+This product contains time-binned lunar brightness temperatures derived from deconvolved
+Chang'E-{orbiter_num} Microwave Radiometer (CE-{orbiter_num} MRM) antenna temperatures at channel {channel}
+({channel_ghz} GHz), presented in equirectangular projection at {ppd} pixels per degree and
+organized into separate HDUs of a FITS file, one HDU per {ltst_binsize}-hour local time bin
+with valid data.

@@ -1,0 +1,6 @@
+<Header>
+  <local_identifier>{hdu_name}_HEADER</local_identifier>
+  <offset unit="byte">{header_offset}</offset>
+  <object_length unit="byte">{header_size}</object_length>
+  <parsing_standard_id>FITS 3.0</parsing_standard_id>
+</Header>

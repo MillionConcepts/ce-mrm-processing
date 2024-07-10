@@ -1,0 +1,2 @@
+It was created by clipping that array's values at 180 / 305 and transforming
+them with a perceptually uniform linear colormap (named "sunset").

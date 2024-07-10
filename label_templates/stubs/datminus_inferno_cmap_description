@@ -1,0 +1,2 @@
+It was created by clipping that array's at its 2nd and 98th percentiles and
+transforming it with a perceptually uniform linear colormap (named "inferno").

@@ -1,0 +1,5 @@
+
+{coordinate} values corresponding to the {logical_axis} ({physical_axis}) axis of all
+temperature-derived arrays in this product. As those arrays are in equirectangular projection,
+the values of this array can simply be repeated across the entire {other_logical_axis} axis
+to generate a traditional 'backplane'.
