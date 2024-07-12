@@ -131,8 +131,8 @@
         </cart:Coordinate_Representation>
        </cart:Planar_Coordinate_Information>
        <cart:Geo_Transformation>
-        <cart:upperleft_corner_x unit="m">{upperleft_x}</cart:upperleft_corner_x>
-        <cart:upperleft_corner_y unit="m">{upperleft_y}</cart:upperleft_corner_y>
+        <cart:upperleft_corner_x unit="m">{ul_pix_x}</cart:upperleft_corner_x>
+        <cart:upperleft_corner_y unit="m">{ul_pix_y}</cart:upperleft_corner_y>
        </cart:Geo_Transformation>
       </cart:Planar>
       <cart:Geodetic_Model>

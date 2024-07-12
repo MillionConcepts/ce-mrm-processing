@@ -167,7 +167,8 @@ class MapLabelWriter(FitsLabelWriter):
         upx, upy = calculate_upperleft(
             mapasc["mpp"], mapasc["lines"], mapasc["samples"]
         )
-        self.associations["ul_pix_x"], self.associations["ul_pix_y"] = upx, upy
+        self.associations["ul_pix_x"] = upx
+        self.associations["ul_pix_y"] = upy
 
     parameter_dicts = (DECONV_PARAMETER_DICT,)
     hdu_description_stubs = hdu_description_stub_paths()
@@ -210,6 +211,10 @@ class MapBrowseLabelWriter(PDSVersionConverter):
         else:
             self.associations['maptype'] = 'temp'
         self.associations['modification_date'] = modification_date()
+        if self.associations['ptype'] == 'tbmod':
+            self.deletion_targets = ['tbmod']
+        else:
+            self.deletion_targets = ['change']
 
     template = TEMPLATE_PATH / "map_browse_template.xml"
     parameter_dicts = (MPt({}),)

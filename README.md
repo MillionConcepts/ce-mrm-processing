@@ -3,7 +3,7 @@
 ## introduction
 
 This repository contains software and ancillary materials used to create the PDS4 bundle
-chang_e_microwave_processed. This bundle includes Planetary Data System 4 (PDS4) versions 
+`chang_e_microwave_processed`. This bundle includes Planetary Data System 4 (PDS4) versions 
 of calibrated (L2C) data products from the Chinese Lunar Exploration Program (CLEP)'s 
 Chang'e-1 (CE-1) and Chang'e-2 (CE-2) Microwave Radiometer (MRM) instruments, along 
 with new products derived from those data. 
@@ -15,6 +15,9 @@ extension of the documentation provided in that bundle.
 
 Please refer to the in-code documentation for complete descriptions of the software's
 functionality and intended usage.
+
+For a more detailed discussion of the software's context and background, please refer
+to `primary_bundle_documentation.md` in the root directory of this repository.
 
 ## repository contents
 

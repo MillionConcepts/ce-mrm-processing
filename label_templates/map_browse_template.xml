@@ -44,6 +44,7 @@
       <discipline_name>Geosciences</discipline_name>
      </Science_Facets>
     </Primary_Result_Summary>
+    {delete:tbmod}
     <Investigation_Area>
      <name>Chang'e-{orbiter_num}</name>
      <type>Mission</type>
@@ -70,6 +71,50 @@
       </Internal_Reference>
      </Observing_System_Component>
     </Observing_System>
+   {stop:tbmod}
+   {delete:change}
+    <Investigation_Area>
+     <name>LUNAR RECONNAISSANCE ORBITER</name>
+     <type>Mission</type>
+     <Internal_Reference>
+      <lidvid_reference>urn:nasa:pds:context:investigation:mission.lunar_reconnaissance_orbiter::1.1</lidvid_reference>
+      <reference_type>data_to_investigation</reference_type>
+     </Internal_Reference>
+    </Investigation_Area>
+    <Observing_System>
+     <Observing_System_Component>
+      <name>LUNAR RECONNAISSANCE ORBITER</name>
+      <type>Host</type>
+      <Internal_Reference>
+       <lidvid_reference>urn:nasa:pds:context:instrument_host:spacecraft.lro::1.2</lidvid_reference>
+       <reference_type>is_instrument_host</reference_type>
+      </Internal_Reference>
+     </Observing_System_Component>
+     <Observing_System_Component>
+      <name>LUNAR RECONNAISSANCE ORBITER CAMERA for LRO</name>
+      <type>Instrument</type>
+      <Internal_Reference>
+       <lidvid_reference>urn:nasa:pds:context:instrument:lro.lroc::1.0</lidvid_reference>
+       <reference_type>is_instrument</reference_type>
+      </Internal_Reference>
+     </Observing_System_Component>
+     <Observing_System_Component>
+      <name>DIVINER LUNAR RADIOMETER EXPERIMENT for LRO</name>
+      <type>Instrument</type>
+      <Internal_Reference>
+       <lidvid_reference>urn:nasa:pds:context:instrument:lro.dlre::1.0</lidvid_reference>
+       <reference_type>is_instrument</reference_type>
+      </Internal_Reference>
+     </Observing_System_Component>
+     <Observing_System_Component>
+      <name>LUNAR ORBITER LASER ALTIMETER for LRO</name>
+      <type>Instrument</type>
+      <Internal_Reference>
+       <lidvid_reference>urn:nasa:pds:context:instrument:lro.lola::1.0</lidvid_reference>
+       <reference_type>is_instrument</reference_type>
+      </Internal_Reference>
+     </Observing_System_Component>
+    </Observing_System>
     <Target_Identification>
      <name>Moon</name>
      <type>Satellite</type>
@@ -78,10 +123,24 @@
       <reference_type>data_to_target</reference_type>
      </Internal_Reference>
     </Target_Identification>
+    <Target_Identification>
+     <name>Moon</name>
+     <type>Satellite</type>
+     <Internal_Reference>
+      <lidvid_reference>urn:nasa:pds:context:target:satellite.earth.moon::1.1</lidvid_reference>
+      <reference_type>data_to_target</reference_type>
+     </Internal_Reference>
+    </Target_Identification>
+   {stop:change}
   </Context_Area>
   <Reference_List>
     <Internal_Reference>
+     {delete:tbmod}
      <lidvid_reference>urn:nasa:pds:chang_e_microwave_processed:data:{orbiter}_{channel}_{maptype}_32ppd::1.0</lidvid_reference>
+     {stop:tbmod}
+     {delete:change}
+     <lidvid_reference>urn:nasa:pds:chang_e_microwave_processed:data:{channel}_{maptype}_32ppd::1.0</lidvid_reference>
+     {stop:change}
      <reference_type>browse_to_data</reference_type>
     </Internal_Reference>
   </Reference_List>
