@@ -1,4 +1,6 @@
 import os
+import re
+import warnings
 from pathlib import Path
 from typing import (
     Any,
@@ -15,7 +17,7 @@ from cytoolz import merge
 from pdr import Data, Metadata
 
 from mrm.converter.basics import product_creation_time, modification_date
-from mrm.converter.templating import fill_template, prep_tagdict
+from mrm.converter.templating import fill_template, prep_tagdict, TagIsNoneError
 
 
 class PDSVersionConverter:
@@ -89,17 +91,30 @@ class PDSVersionConverter:
         return element
 
     def fill_template(self, path=None, text=None, pprint_xml=True):
-        return fill_template(
-            template_path=self.template if path is text is None else path,
-            template_text=text,
-            deletion_targets=self.deletion_targets,
-            associations=self.associations,
-            pprint_xml=pprint_xml
-        )
+        try:
+            return fill_template(
+                template_path=self.template if path is text is None else path,
+                template_text=text,
+                deletion_targets=self.deletion_targets,
+                associations=self.associations,
+                pprint_xml=pprint_xml,
+            )
+        except TagIsNoneError as te:
+            raise TypeError(f"{te} ({self.output_stem})")
 
-    def convert_label(self, pprint_xml=True):
+    def _maybe_tagwarn(self, tagwarn=True):
+        if tagwarn is False or self.pds4_label is None:
+            return
+        if len(maybetags := re.findall(r"{.*?}", self.pds4_label)) > 0:
+            warnings.warn(
+                f"Possible unfilled tags for {self.output_stem}: "
+                f"{', '.join(maybetags)}"
+            )
+
+    def convert_label(self, pprint_xml=True, tagwarn=True):
         self._make_associations()
         self.pds4_label = self.fill_template(pprint_xml=pprint_xml)
+        self._maybe_tagwarn(tagwarn)
 
     def write_label(self, output_directory: Union[str, Path]):
         self.pds4_label_path = Path(

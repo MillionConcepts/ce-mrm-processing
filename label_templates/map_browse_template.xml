@@ -9,19 +9,29 @@
     <logical_identifier>urn:nasa:pds:chang_e_microwave_processed:browse:{lid_suffix}</logical_identifier>
     <version_id>1.0</version_id>
     <title>
-     Browse Image for {hdu_name} from {orbiter}_{channel}_{maptype}_32ppd
+     {delete:tbmod}
+     Browse Image for {hdu_name} from {orbiter}_{channel}_{maptype}_32ppd.fits
+     {stop:tbmod}
+     {delete:change}
+     Browse Image for {hdu_name} from {channel}_tbmod_32ppd.fits
+     {stop:change}
     </title>
     <information_model_version>1.21.0.0</information_model_version>
     <product_class>Product_Browse</product_class>
     <Citation_Information>
      <author_list>
      St. Clair, Michael; Brown, Sierra; Feng, Jianqing; Million, Chase;
-     Siegler, Matthew.
+     Siegler, Matthew
      </author_list>
-     <editor_list>Ward, Jennifer.</editor_list>
+     <editor_list>Ward, Jennifer</editor_list>
      <publication_year>2024</publication_year>
      <description>
-       This is a browse image for the {hdu_name} HDU of {orbiter}_{channel}_{maptype}_32ppd.
+       {delete:tbmod}
+       This is a browse image for the {hdu_name} HDU of {orbiter}_{channel}_{maptype}_32ppd.fits.
+       {stop:tbmod}
+       {delete:change}
+       This is a browse image for the {hdu_name} HDU of {channel}_tbmod_32ppd.fits.
+       {stop:change}
        {cmap_desc}
        The resulting array was then downsampled, given a colorbar, a title, and
        a coordinate grid overlay, and encoded as a PNG file for desktop display.
@@ -91,7 +101,7 @@
       </Internal_Reference>
      </Observing_System_Component>
      <Observing_System_Component>
-      <name>LUNAR RECONNAISSANCE ORBITER CAMERA for LRO</name>
+      <name>LUNAR RECONNAISSANCE ORBITER CAMERA</name>
       <type>Instrument</type>
       <Internal_Reference>
        <lidvid_reference>urn:nasa:pds:context:instrument:lro.lroc::1.0</lidvid_reference>
@@ -99,7 +109,7 @@
       </Internal_Reference>
      </Observing_System_Component>
      <Observing_System_Component>
-      <name>DIVINER LUNAR RADIOMETER EXPERIMENT for LRO</name>
+      <name>DIVINER LUNAR RADIOMETER EXPERIMENT</name>
       <type>Instrument</type>
       <Internal_Reference>
        <lidvid_reference>urn:nasa:pds:context:instrument:lro.dlre::1.0</lidvid_reference>
@@ -107,7 +117,7 @@
       </Internal_Reference>
      </Observing_System_Component>
      <Observing_System_Component>
-      <name>LUNAR ORBITER LASER ALTIMETER for LRO</name>
+      <name>LUNAR ORBITER LASER ALTIMETER</name>
       <type>Instrument</type>
       <Internal_Reference>
        <lidvid_reference>urn:nasa:pds:context:instrument:lro.lola::1.0</lidvid_reference>

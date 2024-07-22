@@ -285,6 +285,10 @@ def replace_nicely_formatted_schema(
     return nice
 
 
+class TagIsNoneError(TypeError):
+    pass
+
+
 def fill_template(
     template_path: Optional[Union[str, Path]] = None,
     template_text: Optional[str] = None,
@@ -308,7 +312,11 @@ def fill_template(
     output_lines = []
     for line in template:
         for k, v in keyfilter(lambda k: k in line, association_tags).items():
-            line = line.replace(k, str(v))
+            if v == "None":
+                raise TagIsNoneError(
+                    f"refusing to fill tag {k} with None; line is {line}"
+                )
+            line = line.replace(k, v)
         if BLANKLINE.match(line) is not True:
             output_lines.append(line)
     if pprint_xml is False:
