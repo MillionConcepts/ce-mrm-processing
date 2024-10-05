@@ -125,23 +125,15 @@
       </Internal_Reference>
      </Observing_System_Component>
     </Observing_System>
+    {stop:change}
     <Target_Identification>
      <name>Moon</name>
      <type>Satellite</type>
      <Internal_Reference>
       <lidvid_reference>urn:nasa:pds:context:target:satellite.earth.moon::1.1</lidvid_reference>
-      <reference_type>data_to_target</reference_type>
+      <reference_type>browse_to_target</reference_type>
      </Internal_Reference>
     </Target_Identification>
-    <Target_Identification>
-     <name>Moon</name>
-     <type>Satellite</type>
-     <Internal_Reference>
-      <lidvid_reference>urn:nasa:pds:context:target:satellite.earth.moon::1.1</lidvid_reference>
-      <reference_type>data_to_target</reference_type>
-     </Internal_Reference>
-    </Target_Identification>
-   {stop:change}
   </Context_Area>
   <Reference_List>
     <Internal_Reference>

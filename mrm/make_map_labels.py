@@ -1,3 +1,4 @@
+from itertools import chain
 from pathlib import Path
 import re
 from types import MappingProxyType as MPt
@@ -9,7 +10,6 @@ from hostess.directory import index_breadth_first
 from hostess.monitors import Stopwatch
 
 from mrm.converter.basics import modification_date
-
 from mrm.converter.converter import PDSVersionConverter
 from mrm.converter.fits import FitsLabelWriter
 from mrm.shared.console import print_inline
@@ -67,6 +67,7 @@ TEMPLATE_PATH = Path(__file__).parent.parent / "label_templates"
 STUB_PATH = TEMPLATE_PATH / "stubs"
 BROWSE_PATH = Path(__file__).parent.parent / "bundle/browse"
 MAP_PATH = Path(__file__).parent.parent / "bundle/data/maps"
+TBMOD_PATH = Path(__file__).parent.parent / "bundle/miscellaneous/tbmod"
 LOGICAL_COORDINATE_AXES = {"LATITUDE": "y", "LONGITUDE": "x"}
 PHYSICAL_COORDINATE_AXES = {"LATITUDE": "Line", "LONGITUDE": "Sample"}
 INVERSE_LOGICAL_AXES = {"LATITUDE": "x", "LONGITUDE": "y"}
@@ -100,11 +101,7 @@ MAPTYPE_NAMES = {
 
 
 def calculate_upperleft(mpp, lines, samples):
-    l0 = 1/2 - lines/2
-    s0 = samples/2 - 1/2
-    upleft_x = -s0 * mpp
-    upleft_y = -l0 * mpp
-    return upleft_x, upleft_y
+    return -samples / 2 * mpp, lines / 2 * mpp
 
 
 def hdu_description_stub_paths():
@@ -202,12 +199,16 @@ class MapBrowseLabelWriter(PDSVersionConverter):
         self.associations['hdu_name'] = (
             f"{self.associations['ptype']}_{self.associations['latbin']}"
         ).upper()
+        if self.path.name.startswith("ce"):
+            self.associations['orbiter_num'] = self.path.name[2]
         self.associations['cmap_desc'] = (STUB_PATH / stub).open().read()
         self.associations['filename'] = self.path.name
         self.associations['lid_suffix'] = self.path.stem.lower()
         self.output_stem = self.path.name.replace(".png", "")
         if self.associations['ptype'] == 'latshift':
             self.associations['maptype'] = 'latshift'
+        elif self.associations['ptype'] == 'tbmod':
+            self.associations['maptype'] = 'tbmod'
         else:
             self.associations['maptype'] = 'temp'
         self.associations['modification_date'] = modification_date()
@@ -223,11 +224,14 @@ class MapBrowseLabelWriter(PDSVersionConverter):
 if __name__ == "__main__":
     watch = Stopwatch()
     watch.start()
-    for mapfile in filter(lambda p: p.suffix == ".fits", MAP_PATH.iterdir()):
+    for mapfile in filter(
+        lambda p: p.suffix == ".fits",
+        chain(MAP_PATH.iterdir(), TBMOD_PATH.iterdir())
+    ):
         print_inline(f"making label for {mapfile.name}...")
         datawriter = MapLabelWriter(mapfile)
         datawriter.convert_label()
-        datawriter.write_label(MAP_PATH)
+        datawriter.write_label(mapfile.parent)
     browse_files = index_breadth_first(BROWSE_PATH)
     for file in filter(lambda f: f['path'].endswith('.png'), browse_files):
         path = Path(file['path'])

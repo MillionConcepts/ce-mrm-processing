@@ -18,9 +18,9 @@
   <Citation_Information>
    <author_list>
     Ground Research and Application System of China’s Lunar and Planetary
-    Exploration Program (no individual attribution provided).
+    Exploration Program (no individual attribution provided)
    </author_list>
-   <editor_list>St. Clair, Michael; Ward, Jennifer.</editor_list>
+   <editor_list>St. Clair, Michael; Ward, Jennifer</editor_list>
    <publication_year>2024</publication_year>
    <description>
     China's Lunar and Planetary Data Release System released calibrated (L2C)
@@ -61,7 +61,7 @@
   </Investigation_Area>
   <Observing_System>
    <Observing_System_Component>
-    <name>Chang'E-2</name>
+    <name>Chang'E-{orbiter_num}</name>
     <type>Host</type>
     <Internal_Reference>
      <lidvid_reference>urn:nasa:pds:context:instrument_host:spacecraft.ce{orbiter_num}::1.0</lidvid_reference>

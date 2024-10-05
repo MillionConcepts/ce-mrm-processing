@@ -25,7 +25,7 @@ from mrm.processing.brightness_mapping import (
 # What are the root directories for source and intermediate data?
 # Note that subdirectories are defined in make_filepaths().
 PIPELINE_DATA_PATH = Path(__file__).parent.parent / "pipeline_data"
-BUNDLE_DATA_PATH = Path(__file__).parent.parent / "bundle/data/maps/"
+TBMOD_DATA_PATH = Path(__file__).parent.parent / "bundle/miscellaneous/tbmod/"
 
 # which chanels should we run?
 CHANNELS: tuple[Literal[1, 2, 3, 4], ...] = (1, 2, 3, 4)
@@ -50,7 +50,7 @@ THREADS = 2
 if __name__ == "__main__":
     # makes directories and also initializes globals in brightness_mapping.
     # should maybe be cleaner.
-    make_filepaths(PIPELINE_DATA_PATH, BUNDLE_DATA_PATH)
+    make_filepaths(PIPELINE_DATA_PATH, TBMOD_DATA_PATH)
     timebins = [
         (start, start + TIMEBIN_SIZE)
         for start in range(0, 24, TIMEBIN_SIZE)

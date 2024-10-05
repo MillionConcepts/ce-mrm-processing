@@ -23,9 +23,9 @@
   <Citation_Information>
    <author_list>
     St. Clair, Michael; Brown, Sierra; Feng, Jianqing; Million, Chase;
-    Siegler, Matthew.
+    Siegler, Matthew
    </author_list>
-   <editor_list>Ward, Jennifer.</editor_list>
+   <editor_list>Ward, Jennifer</editor_list>
    <publication_year>2024</publication_year>
    {description}
   </Citation_Information>
@@ -155,7 +155,7 @@
    {stop:datminus}
    {delete:temp}
    <Source_Product_Internal>
-    <lidvid_reference>urn:nasa:pds:chang_e_microwave_processed:data:t{channel}_temp_{ppd}ppd::1.0</lidvid_reference>
+    <lidvid_reference>urn:nasa:pds:chang_e_microwave_processed:miscellaneous:t{channel}_tbmod_{ppd}ppd::1.0</lidvid_reference>
     <reference_type>data_to_derived_source_product</reference_type>
     <comment>Mapped model data.</comment>
    </Source_Product_Internal>

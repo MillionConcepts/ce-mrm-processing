@@ -10,6 +10,7 @@ execution.
 """
 
 import re
+from itertools import chain
 from numbers import Number
 from pathlib import Path
 from typing import Literal, Sequence
@@ -223,13 +224,13 @@ def write_latshift_hdul(map_path, orbiter, channel, ppd):
     hdul.writeto(path, overwrite=True)
 
 
-def assemble_datminus_hdul(map_path, orb, channel, ppd):
+def assemble_datminus_hdul(map_path, tbmod_path, orb, channel, ppd):
     """
     Load data from per-channel stacked-time TEMP/STDEV and TBMOD FITS files,
     difference them, and assemble them into a DATMINUS HDUL.
     """
     obs = map_path / f"{orb.lower()}_t{channel}_temp_{ppd}ppd.fits"
-    mod = map_path / f"t{channel}_tbmod_{ppd}ppd.fits"
+    mod = tbmod_path / f"t{channel}_tbmod_{ppd}ppd.fits"
     assert obs.exists(), f"missing TEMP for t{channel} / {ppd}ppd / ce{orb}"
     assert mod.exists(), f"missing TBMOD for t{channel} / {ppd}ppd"
     obslon, modlon = (fits.open(f)['LONGITUDE'].data for f in (obs, mod))
@@ -268,9 +269,9 @@ def assemble_datminus_hdul(map_path, orb, channel, ppd):
     )
 
 
-def write_datminus_hdul(map_path, orbiter, channel, ppd):
+def write_datminus_hdul(map_path, tbmod_path, orbiter, channel, ppd):
     """Build and write single-channel stacked-time DATMINUS FITS file"""
-    hdul = assemble_datminus_hdul(map_path, orbiter, channel, ppd)
+    hdul = assemble_datminus_hdul(map_path, tbmod_path, orbiter, channel, ppd)
     path = map_path / f"{orbiter.lower()}_t{channel}_datminus_{ppd}ppd.fits"
     print(f"writing to {path}...", end="", flush=True)
     hdul.writeto(path, overwrite=True)
@@ -349,6 +350,7 @@ def make_browse_products(
     *,
     channel,
     map_path,
+    tbmod_path,
     browse_path,
     ptypes,
     cmaps,
@@ -360,7 +362,7 @@ def make_browse_products(
 ):
     for path in filter(
         lambda p: re.search(rf"t{channel}.*\.fits", p.name),
-        map_path.iterdir(),
+        chain(map_path.iterdir(), tbmod_path.iterdir()),
     ):
         if path.name.startswith("ce") and not path.name.startswith(orbiter):
             continue
@@ -448,6 +450,7 @@ SETTINGS = {
     "font": "TitilliumWeb-Regular.ttf",
     "slice_path": Path(__file__).parent.parent / "pipeline_data" / "deconv_slices",
     "map_path": Path(__file__).parent.parent / "bundle/data/maps",
+    "tbmod_path": Path(__file__).parent.parent / "bundle/miscellaneous/tbmod",
     "browse_path": Path(__file__).parent.parent / "bundle/browse",
     "variable_meta": ("OLTSTMIN", "OLTSTMAX"),
     "max_abslat": 75,
@@ -486,6 +489,7 @@ def _assemble_channel_products(
     browse_path,
     dpi_downscale,
     map_path,
+    tbmod_path,
     font,
     fontsize,
     slice_path,
@@ -496,9 +500,7 @@ def _assemble_channel_products(
     tomake,
     variable_meta,
 ):
-    mkwargs = {
-        "orbiter": orbiter, "map_path": map_path, "channel": channel
-    }
+    mkwargs = {"orbiter": orbiter, "map_path": map_path, "channel": channel}
     watch = Stopwatch()
     watch.start()
     if "base" in tomake:
@@ -517,13 +519,14 @@ def _assemble_channel_products(
         print(f"done with latshift ({watch.clickpeek()})")
     if "datminus" in tomake:
         print(f"****creating datminus FITS for channel {channel}****")
-        write_datminus_hdul(**mkwargs, ppd=ppd)
+        write_datminus_hdul(**mkwargs, tbmod_path=tbmod_path, ppd=ppd)
         print(f"done with datminus ({watch.clickpeek()})")
     if "browse" in tomake:
         print(f"****creating browse products for channel {channel}****")
         make_browse_products(
             channel=channel,
             map_path=map_path,
+            tbmod_path=tbmod_path,
             browse_path=browse_path,
             ptypes=tobrowse,
             fontproperties=mplf.FontProperties(
@@ -547,6 +550,7 @@ def _run(
     *,
     slice_path,
     map_path,
+    tbmod_path,
     browse_path,
     variable_meta,
     max_abslat,
@@ -570,6 +574,7 @@ def _run(
         "browse_path": browse_path,
         "dpi_downscale": dpi_downscale,
         "map_path": map_path,
+        "tbmod_path": tbmod_path,
         "font": font,
         "fontsize": fontsize,
         "slice_path": slice_path,

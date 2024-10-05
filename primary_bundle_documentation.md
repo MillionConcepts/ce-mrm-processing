@@ -96,7 +96,7 @@ with respective bandwidths of 100, 200, 500, and 500 MHz. Nominal radiometric
 resolution is 0.5 K for all channels. Angular full width at half maximum
 (FWHM) is ~13 degrees for channel 1 and ~10 degrees for the higher channels,
 although the main beams are platykurtic and slightly asymmetrical. The first
-side lobes are larger and highly asymmetrical. Outer side lobes are not
+side lobes are larger and highly asymmetric. Outer side lobes are not
 characterized in the literature. Please refer to Wang et al., 2010b for a
 more complete description of antenna patterns.
 
@@ -254,11 +254,14 @@ hour angle (especially in the lower channels).
 
 # Bundle Directory Structure
 
-## /ancillary
+## /miscellaneous
 
-Bundle's ancillary collection. Contains a handful of products used as model
-inputs for derivation of map-projected products in the data collection. This
-collection has no subdirectories.
+Bundle's ancillary collection. Contains two products used for derivation of
+the "tbmod" map-projected products in the "tbmod" subdirectory.
+
+## /miscellaneous/tbmod
+
+Thermal brightness model maps.
 
 ## /browse
 
@@ -304,7 +307,7 @@ corpus-level analyses of the data.
 
 ## /data/maps
 
-Map-projected data products.
+Map-projected CE MRM data products.
 
 ## /data_source
 
@@ -333,10 +336,13 @@ The bundle's data collection includes 4 types of map-projected
 products: "temp", "latshift", "datminus", and "tbmod". This section describes
 their contents and organization. More details on the process used to derive
 them are given in the "Deconvolved Map Product Processing" section below.
+Note that the "tbmod" maps are in the bundle's miscellaneous collection,
+as they do not use CE MRM observational data as an input. The others are
+in the bundle's data collection.
 
 ### Projection
 
-These products contain maps of the lunar service in equirectangular projection
+These products contain maps of the lunar surface in equirectangular projection
 at 32 pixels per degree, centered on 0 degrees latitude / 0 degrees
 longitude. All maps cover -180 to 180 degrees longitude. "temp"
 and "latshift" products cover -75 to 75 degrees latitude; "datminus"
@@ -372,6 +378,27 @@ binary arrays in separate HDUs of its FITS file. We chose this physical
 layout because storing multiple named array objects per file simplifies
 logical product structure and physical file access, and comes with almost no
 performance tradeoffs due to the affordances of the FITS format.
+
+### Usage Notes
+
+* Users who want to use these maps with dedicated GIS software can convert them 
+to GeoTIFF using the `gdal_translate` program included with 
+[GDAL](https://gdal.org/en/latest/). The GDAL PDS4 driver will include the map 
+projection specified in the .xml label in the output GeoTIFF. 
+[Detailed instructions for use of the GDAL PDS4 driver are here.](https://gdal.org/en/latest/drivers/raster/pds4.html) 
+  * For example, `gdal_translate PDS4:ce1_t4_temp_32ppd.xml:1:3 ce2_t4_temp_4_6.tif`
+    will produce a GeoTIFF from the third raster array in ce2_t4_temp_32ppd.fits.
+  * For a list of which PDS4 object names correspond to which GDAL 'subdataset'
+    number (the '3' in the '1:3' part of the `gdal_translate` command above)
+    in a particular file, run `gdalinfo` on the .xml label file.
+* FITS normally uses bottom-to-top array order, but we wrote these maps 
+top-to-bottom for compatibility with simple raster display tools like PDS4 Viewer 
+and `pdr`. However, this means that users of FITS-specific display tools like 
+`fv` or DS9 may see the maps flipped bottom-to-top (i.e. South up). If this 
+occurs, simply mirror the maps about the x axis / equator.
+  * Note that this has no effect on GDAL, because its PDS4 driver respects the 
+  `vertical_display_direction` keyword and will interpret the maps North up as
+  intended.
 
 ### Data Objects
 
@@ -671,16 +698,17 @@ CE-1 and CE-2 table formats are semantically equivalent, although column names
 and boundaries differ slightly. (Please refer to their PDS4 or PVL labels for
 details.) The columns contain:
 
-1. Time UTC, expressed in ISO 8601 format to millisecond precision 2. Channel
-1 brightness temperature in Kelvin, given to two decimal places 3. Channel 2
-brightness temperature in Kelvin, given to two decimal places 4. Channel 3
-brightness temperature in Kelvin, given to two decimal places 5. Channel 4
-brightness temperature in Kelvin, given to two decimal places 6. Signed solar
-incidence angle in degrees, given to four decimal places 7. Solar azimuth
-angle in degrees, given to four decimal places 8. Latitude in degrees, given
-to four decimal places 9. Longitude in degrees, given to four decimal places
-10. Orbital height in kilometers, given to six decimal places 11. Quality
-state, given as an encoded string (possibly a malformatted hexadecimal
+1. Time UTC, expressed in ISO 8601 format to millisecond precision 
+2. Channel 1 brightness temperature in Kelvin, given to two decimal places 
+3. Channel 2 brightness temperature in Kelvin, given to two decimal places 
+4. Channel 3 brightness temperature in Kelvin, given to two decimal places 
+5. Channel 4 brightness temperature in Kelvin, given to two decimal places 
+6. Signed solar incidence angle in degrees, given to four decimal places 
+7. Solar azimuth angle in degrees, given to four decimal places 
+8. Latitude in degrees, given to four decimal places 
+9. Longitude in degrees, given to four decimal places
+10. Orbital height in kilometers, given to six decimal places 
+11. Quality state, given as an encoded string (possibly a malformatted hexadecimal
 integer) in CE-1 tables and a 0-padded 2-digit decimal integer in CE-2
 tables. The exact meanings of specific quality state values are not included
 in documentation, but any value of this field other than “0X000000”(for CE-1)
@@ -744,32 +772,37 @@ stored in MSB order.
 ### Columns
 
 1. ORBIT (2-byte unsigned integer, unitless): Mission-specified orbit number,
-taken from names of source files. 2. UTC (23-byte UTF-8 string, unitless) ISO
-8601-formatted time string, taken from source tables. 3. ET (8-byte float,
-seconds):  Ephemeris Time (offset in seconds from J2000, commonly used in the
-SPICE ecosystem). Derived from UTC and NAIF ephemerides. 4. LTST
-(4-byte float, unitless): Local true solar time, normalized to 0-1, derived
-from ET, LON, and NAIF ephemerides. 5. T1-T4: (4-byte float, K, 4 columns
-total): antenna temperature at channels 1-4, taken from source tables. 6.
-LAT (4-byte float, degrees): Selenodetic latitude of boresight position in
-MOON_ME, taken from source tables. 7. LON (4-byte float, degrees):
-Selenodetic longitude of boresight position in MOON_ME, taken from source
-tables and converted from 0-360 to -180-180 representation. 8. D
-(4-byte float, km): Distance from orbiter to boresight intercept point, taken
-from source tables. 9. BX, BY, BZ (8-byte float, km, 3 columns total): X, Y,
-and Z components of boresight intercept point relative to Sun body center in
-ecliptic coordinates (ECLIPJ2000), derived from LAT, LON, ET, and NAIF
-ephemerides. 10. CX, CY, CZ (8-byte float, km, 3 columns total): like
-BX/BY/BZ, but for orbiter position rather than boresight intercept point. 11.
-MX, MY, MZ (8-byte float, km, 3 columns total): like BX/BY/BZ, but for Moon
-body center rather than boresight intercept point. 12. NX, NY, NZ
-(4-byte float, unitless, 3 columns total): X, Y, and Z components of unit
-normal vector at boresight intercept point in body-fixed
-(MOON_ME) coordinates. 13. FLAG (2-byte unsigned integer, unitless): Quality
-flags expressed as a bitmask. These are our own flags and are not directly
-propagated from the source data. For most analytic purposes, we recommend
-discarding all samples with a nonzero value in this field, with the possible
-exception of 0b1000000. Individual (summable) values denote:
+taken from names of source files. 
+2. UTC (23-byte UTF-8 string, unitless) ISO 8601-formatted time string, taken 
+from source tables. 
+3. ET (8-byte float, seconds):  Ephemeris Time (offset in seconds from J2000,
+commonly used in the SPICE ecosystem). Derived from UTC and NAIF ephemerides. 
+4. LTST (4-byte float, unitless): Local true solar time, normalized to 0-1, 
+derived from ET, LON, and NAIF ephemerides. 
+5. T1-T4: (4-byte float, K, 4 columns total): antenna temperature at channels 
+1-4, taken from source tables. 
+6. LAT (4-byte float, degrees): Selenodetic latitude of boresight position in
+MOON_ME, taken from source tables. 
+7. LON (4-byte float, degrees): Selenodetic longitude of boresight position in
+MOON_ME, taken from source tables and converted from 0-360 to -180-180 
+representation. 
+8. D (4-byte float, km): Distance from orbiter to boresight intercept point, 
+taken from source tables. 
+9. BX, BY, BZ (8-byte float, km, 3 columns total): X, Y, and Z components of 
+boresight intercept point relative to Sun body center in ecliptic coordinates 
+(ECLIPJ2000), derived from LAT, LON, ET, and NAIF ephemerides. 
+10. CX, CY, CZ (8-byte float, km, 3 columns total): like BX/BY/BZ, but for 
+orbiter position rather than boresight intercept point. 
+11. MX, MY, MZ (8-byte float, km, 3 columns total): like BX/BY/BZ, but for Moon
+body center rather than boresight intercept point. 
+12. NX, NY, NZ (4-byte float, unitless, 3 columns total): X, Y, and Z components 
+of unit normal vector at boresight intercept point in body-fixed
+(MOON_ME) coordinates. 
+13. FLAG (2-byte unsigned integer, unitless): Quality flags expressed as a 
+bitmask. These are our own flags and are not directly propagated from the source 
+data. For most analytic purposes, we recommend discarding all samples with a 
+nonzero value in this field, with the possible exception of 0b1000000. Individual
+(summable) values denote:
    * 0b1: Sample flagged as bad by data providers. Note that this value is
     not used in the CE-1 table. This is because there are very few flagged rows
     in the CE-1 L2C source files (~30, as opposed to ~1.5 million in CE-2), and
@@ -988,12 +1021,12 @@ we perform the following steps (ignoring many implementation details):
 
 There are at least two distinct existing approaches to dealing with the wide
 footprint of the MRM data. One is a deconvolution approach of a very
-different character (Xing et al., 2015) that applies a maximum entropy-based
-image reconstruction technique to some unspecified “original map” of the CE-2
-data. We suspect our approach is more valid; however, as the authors did not
-fully specify their inputs or methods, and made neither their code nor their
-data products available, we have not been able to meaningfully assess their
-work.
+different character that applies a maximum entropy-based image reconstruction 
+technique to some unspecified “original map” of the CE-2 data 
+(Xing et al., 2015, pp. 294-295). We suspect our approach is more valid; 
+however, as the authors did not fully specify their inputs, and made neither 
+their code nor their data products available, we have not been able to 
+meaningfully assess their work.
 
 Another approach, which is applicable only to analyses that fuse the MRM data
 with other observational or model data, borrows a common technique from
@@ -1104,7 +1137,8 @@ objectives and payloads of Chang’E-1 lunar satellite. J. Earth Syst. Sci. 114,
 Jones, A., 2021. China to launch a pair of spacecraft towards the edge of the
 solar system. SpaceNews.  
 
-Li, C., 2013. Chang’e 2 Flyby of Toutatis.  
+Li, C. & Li, H, 2013. Chang’e 2 Flyby of Toutatis (presentation). SBAG 8 (2013).
+https://www.lpi.usra.edu/sbag/meetings/jan2013/presentations/sbag8_presentations/TUES_0930_CE_Toutatis.pdf
 
 NSSDCA, 2022. Chang’e 2 [WWW Document]. NASA Space Sci. Data Coord. Arch.
 

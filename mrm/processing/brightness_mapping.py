@@ -167,7 +167,7 @@ def load_dem(
     return hdul
 
 
-def make_filepaths(pipeline_data_path: Path, bundle_data_path: Path):
+def make_filepaths(pipeline_data_path: Path, tbmod_data_path: Path):
     srcmap_path = pipeline_data_path / "source_maps"
     intmap_path = pipeline_data_path / "intermediate_maps"
     tablepath = pipeline_data_path
@@ -175,7 +175,7 @@ def make_filepaths(pipeline_data_path: Path, bundle_data_path: Path):
         SRC_PATHS[k] = srcmap_path / v
         INT_PATHS[k] = intmap_path / f"{k}_processed.fits"
     SRC_PATHS["tb_table"] = tablepath / SRCTABLE_FN
-    INT_PATHS["tb_modelmap_root"] = bundle_data_path
+    INT_PATHS["tb_modelmap_root"] = tbmod_data_path
     notfound = [v.name for v in SRC_PATHS.values() if not v.exists()]
     if len(notfound) > 0:
         warnings.warn(
