@@ -202,6 +202,7 @@ from textwrap import wrap
 from collections import defaultdict
 from typing import Hashable, MutableMapping, MutableSequence
 
+
 def seqmerge(
     lmap: MutableMapping[Hashable, MutableSequence],
     rmap: MutableMapping[Hashable, MutableSequence]

@@ -1,3 +1,4 @@
+import warnings
 from itertools import chain
 from pathlib import Path
 import re
@@ -277,9 +278,16 @@ class FitsLabelWriter(PDSVersionConverter):
             filter(None, chain.from_iterable(self.hdu_labels.values()))
         )
 
-    def convert_label(self, pprint_xml=True):
+    def convert_label(self, pprint_xml=True, tagwarn=True):
         self._make_associations(False, True)
         self.pds4_label = self.fill_template(pprint_xml=pprint_xml)
+        if tagwarn is False:
+            return
+        if len(maybetags := re.findall(r"{.*?}", self.pds4_label)) > 0:
+            warnings.warn(
+                f"Possible unfilled tags for {self.data.filename}: "
+                f"{', '.join(maybetags)}"
+            )
 
     description_stub = None
     hdu_parameter_dicts = None

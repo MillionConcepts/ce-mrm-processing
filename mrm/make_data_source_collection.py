@@ -20,10 +20,10 @@ TEMPLATE_PATH = Path(__file__).parent.parent / "label_templates"
 STUB_PATH = TEMPLATE_PATH / "stubs"
 OUTPUT_ROOT = Path(__file__).parent.parent / "bundle" / "data_source"
 CE1_L2C_PATH = Path(
-    "/datascratch/CE1_MRM_2C_20071127161816_20090114192053_B/DATA"
+    "/home/michael/datascratch/CE1_MRM_2C_20071127161816_20090114192053_B/DATA"
 )
 CE2_L2C_PATH = Path(
-    "/datascratch/CE2_MRM_2C_20101015085002_20110520125150_A/DATA"
+    "/home/michael/datascratch/CE2_MRM_2C_20101015085002_20110520125150_A/DATA"
 )
 
 

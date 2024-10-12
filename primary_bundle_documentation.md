@@ -256,8 +256,11 @@ hour angle (especially in the lower channels).
 
 ## /miscellaneous
 
-Bundle's ancillary collection. Contains two products used for derivation of
-the "tbmod" map-projected products in the "tbmod" subdirectory.
+Root directory of the bundle's miscellaneous collection. This collection 
+includes products that were used to help derive some products in the data 
+collection, but that were not themselves derived from CE MRM data. The root 
+directory contains two products used to help derive the products in this 
+collection's "tbmod" subdirectory.
 
 ## /miscellaneous/tbmod
 
@@ -1023,7 +1026,7 @@ There are at least two distinct existing approaches to dealing with the wide
 footprint of the MRM data. One is a deconvolution approach of a very
 different character that applies a maximum entropy-based image reconstruction 
 technique to some unspecified “original map” of the CE-2 data 
-(Xing et al., 2015, pp. 294-295). We suspect our approach is more valid; 
+(Xing et al., 2015). We suspect our approach is more valid; 
 however, as the authors did not fully specify their inputs, and made neither 
 their code nor their data products available, we have not been able to 
 meaningfully assess their work.
@@ -1037,7 +1040,6 @@ convolving comparison data with the radiometer antenna pattern makes
 comparison of feature extents more realistic, but leaves in all the noise and
 loss effects associated with BAA. We have used this technique in some
 previous projects, but now consider it inferior to “correct” deconvolution.
-
 
 
 # Thermal Brightness Modeling
@@ -1080,7 +1082,7 @@ some of our products.)
 
 Finally, we ingest derived maps of h-parameter, albedo, slope, and azimuth
 based on observational data from Kaguya SELENE and LRO Diviner, LOLA, and
-LROC, then coregister them to the intended scale and lat/lon bounds of our
+LROC then coregister them to the intended scale and lat/lon bounds of our
 output maps. For each element of our array of local time bins, we adjust
 effective local time using the slope/azimuth data (this essentially treats
 hour angle as “real” local time); then, for each of the MRM channel center
@@ -1090,7 +1092,10 @@ produced by the brightness temperature model. These are the TBMOD maps in
 the “tbmod” products. Our “datminus” maps are produced by subtracting the
 values in these maps from the TEMP maps in the “temp” products.
 
-
+(The slope and azimuth maps are available from the PDS LOLA node and
+are referenced in the "tbmod" product labels. The albedo and h-parameter maps 
+are, respectively, wac_hapke_604nm_70N70S_64ppd.fits and hpar_global_128ppd.fits, 
+and are both included in this bundle's miscellaneous collection.)
 
 # Bibliography
 
@@ -1189,7 +1194,7 @@ https://doi.org/10.1007/s11430-010-4008-x
 
 Xing et al., 2015. The deconvolution of lunar brightness temperature based 
 on the maximum entropy method using Chang’e-2 microwave data. Res. Astron. 
-Astrophys. 15.  
+Astrophys. 15., pp. 293-304.
 
 Zheng, Y.C., Tsang, K.T., Chan, K.L., Zou, Y.L., Zhang, F., Ouyang, Z.Y., 2012. 
 First microwave map of the Moon with Chang’E-1 data: The role of local time 
