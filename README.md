@@ -6,12 +6,12 @@ This repository contains software and ancillary materials used to create the PDS
 `chang_e_microwave_processed`. This bundle includes Planetary Data System 4 (PDS4) versions 
 of calibrated (L2C) data products from the Chinese Lunar Exploration Program (CLEP)'s 
 Chang'e-1 (CE-1) and Chang'e-2 (CE-2) Microwave Radiometer (MRM) instruments, along 
-with new products derived from those data. 
+with new products derived from those data. It is hosted by the 
+[Geosciences Node of the Planetary Data System](https://pds-geosciences.wustl.edu/lunar/urn-nasa-pds-chang_e_microwave_processed/).
 
 This repository is not a mirror of that bundle, which is too large to distribute on 
-GitHub. The bundle is is currently in review and should be available through the PDS 
-Geosciences Node sometime in Q4 2024. This repository is intended principally as an 
-extension of the documentation provided in that bundle.
+GitHub. This repository is intended principally as an extension of the documentation 
+provided in that bundle.
 
 Please refer to the in-code documentation for complete descriptions of the software's
 functionality and intended usage.
@@ -88,3 +88,5 @@ LICENSE file).
 
 The files in /static/fonts are subject to the Open Font License under multiple copyrights.
 Copies of their licenses are included in /static/fonts.
+
+`primary_bundle_documentation.md` is in the public domain.
